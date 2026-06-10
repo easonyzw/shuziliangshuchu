@@ -2,6 +2,26 @@
 
 sIO_parameter IO_parameter[16];
 
+/* 引脚配置表：{CH端口, CH引脚, LED端口, LED引脚} */
+const PinConfig_TypeDef pin_config_table[16] = {
+    {GPIOA, GPIO_Pin_1,  GPIOA, GPIO_Pin_15},   /* CH0 */
+    {GPIOC, GPIO_Pin_5,  GPIOC, GPIO_Pin_11},   /* CH1 */
+    {GPIOA, GPIO_Pin_0,  GPIOD, GPIO_Pin_2},    /* CH2 */
+    {GPIOC, GPIO_Pin_4,  GPIOB, GPIO_Pin_4},    /* CH3 */
+    {GPIOA, GPIO_Pin_7,  GPIOB, GPIO_Pin_7},    /* CH4 */
+    {GPIOA, GPIO_Pin_6,  GPIOC, GPIO_Pin_13},   /* CH5 */
+    {GPIOA, GPIO_Pin_5,  GPIOC, GPIO_Pin_14},   /* CH6 */
+    {GPIOC, GPIO_Pin_3,  GPIOC, GPIO_Pin_15},   /* CH7 */
+    {GPIOA, GPIO_Pin_4,  GPIOF, GPIO_Pin_7},    /* CH8 */
+    {GPIOF, GPIO_Pin_5,  GPIOC, GPIO_Pin_10},   /* CH9 */
+    {GPIOF, GPIO_Pin_4,  GPIOC, GPIO_Pin_12},   /* CH10 */
+    {GPIOA, GPIO_Pin_3,  GPIOB, GPIO_Pin_3},    /* CH11 */
+    {GPIOA, GPIO_Pin_2,  GPIOB, GPIO_Pin_5},    /* CH12 */
+    {GPIOC, GPIO_Pin_2,  GPIOB, GPIO_Pin_6},    /* CH13 */
+    {GPIOC, GPIO_Pin_1,  GPIOB, GPIO_Pin_8},    /* CH14 */
+    {GPIOC, GPIO_Pin_0,  GPIOB, GPIO_Pin_9},    /* CH15 */
+};
+
 /******************************************************************
  * @brief  digital input data initialize
  * @input  none
@@ -9,203 +29,38 @@ sIO_parameter IO_parameter[16];
 ******************************************************************/
 void digital_output_initialization(void)
 {
-  unsigned char i;
-		
-	for(i=0;i<16;i++)
-	{
-			IO_parameter[i].filter=1;
-	}
-	
+    unsigned char i;
+
+    for(i = 0; i < 16; i++)
+    {
+        IO_parameter[i].filter = 1;
+    }
 }
 
-
 /******************************************************************
- * @brief  Port LED 
+ * @brief  表驱动：根据 data_output 逐位控制 16 路通道+LED
  * @input  none
  * @return  none
 ******************************************************************/
-void IO_state_update(void)                          
+void IO_state_update(void)
 {
-  
-    if(((modbus_management.data_output>>0)&0x01) == 0x01)
-		{
-			CH_0_ON;
-			LED_0_ON;
-		}
-		else 
-    {
-			CH_0_OFF;
-			LED_0_OFF;
-		}
-    
-    if(((modbus_management.data_output>>1)&0x01) == 0x01)
-		{
-			CH_1_ON;
-			LED_1_ON;
-		}
-		else 
-    {
-			CH_1_OFF;
-			LED_1_OFF;
-		}
-    
-    if(((modbus_management.data_output>>2)&0x01) == 0x01)
-		{
-			CH_2_ON;
-			LED_2_ON;
-		}
-		else 
-    {
-			CH_2_OFF;
-			LED_2_OFF;
-		}
-    
-    if(((modbus_management.data_output>>3)&0x01) == 0x01)
-		{
-			CH_3_ON;
-			LED_3_ON;
-		}
-		else 
-    {
-			CH_3_OFF;
-			LED_3_OFF;
-		}
-    
-    if(((modbus_management.data_output>>4)&0x01) == 0x01)
-		{
-			CH_4_ON;
-			LED_4_ON;
-		}
-		else 
-    {
-			CH_4_OFF;
-			LED_4_OFF;
-		}
-    
-    if(((modbus_management.data_output>>5)&0x01) == 0x01)
-		{
-			CH_5_ON;
-			LED_5_ON;
-		}
-		else 
-    {
-			CH_5_OFF;
-			LED_5_OFF;
-		}
-    
-    if(((modbus_management.data_output>>6)&0x01) == 0x01)
-		{
-			CH_6_ON;
-			LED_6_ON;
-		}
-		else 
-    {
-			CH_6_OFF;
-			LED_6_OFF;
-		}
-    
-    if(((modbus_management.data_output>>7)&0x01) == 0x01)
-		{
-			CH_7_ON;
-			LED_7_ON;
-		}
-		else 
-    {
-			CH_7_OFF;
-			LED_7_OFF;
-		}
-    
-    if(((modbus_management.data_output>>8)&0x01) == 0x01)
-		{
-			CH_8_ON;
-			LED_8_ON;
-		}
-		else 
-    {
-			CH_8_OFF;
-			LED_8_OFF;
-		}
-    
-    if(((modbus_management.data_output>>9)&0x01) == 0x01)
-		{
-			CH_9_ON;
-			LED_9_ON;
-		}
-		else 
-    {
-			CH_9_OFF;
-			LED_9_OFF;
-		}
-    
-    if(((modbus_management.data_output>>10)&0x01) == 0x01)
-		{
-			CH_10_ON;
-			LED_10_ON;
-		}
-		else 
-    {
-			CH_10_OFF;
-			LED_10_OFF;
-		}
-    
-    if(((modbus_management.data_output>>11)&0x01) == 0x01)
-		{
-			CH_11_ON;
-			LED_11_ON;
-		}
-		else 
-    {
-			CH_11_OFF;
-			LED_11_OFF;
-		}
-    
-    if(((modbus_management.data_output>>12)&0x01) == 0x01)
-		{
-			CH_12_ON;
-			LED_12_ON;
-		}
-		else 
-    {
-			CH_12_OFF;
-			LED_12_OFF;
-		}
-    
-    if(((modbus_management.data_output>>13)&0x01) == 0x01)
-		{
-			CH_13_ON;
-			LED_13_ON;
-		}
-		else 
-    {
-			CH_13_OFF;
-			LED_13_OFF;
-		}
-    
-    if(((modbus_management.data_output>>14)&0x01) == 0x01)
-		{
-			CH_14_ON;
-			LED_14_ON;
-		}
-		else 
-    {
-			CH_14_OFF;
-			LED_14_OFF;
-		}
-    
-    if(((modbus_management.data_output>>15)&0x01) == 0x01)
-		{
-			CH_15_ON;
-			LED_15_ON;
-		}
-		else 
-    {
-			CH_15_OFF;
-			LED_15_OFF;
-		}
-    
-   
-		module_show_status_running();
+    unsigned char i;
 
+    for(i = 0; i < 16; i++)
+    {
+        if((modbus_management.data_output >> i) & 0x01)
+        {
+            CH_ON(i);
+            LED_ON(i);
+        }
+        else
+        {
+            CH_OFF(i);
+            LED_OFF(i);
+        }
+    }
+
+    module_show_status_running();
 }
 
 /******************************************************************
@@ -215,74 +70,49 @@ void IO_state_update(void)
 ******************************************************************/
 void module_show_status(void)
 {
-  if(timer_counter.LED_ms>500)
-  {
-    LED_all_close();
-    timer_counter.LED_ms=0;
-  }
-  else if(timer_counter.LED_ms>250)
-  {    
-    LED_all_open();
-  }
+    if(timer_counter.LED_ms > 500)
+    {
+        LED_all_close();
+        timer_counter.LED_ms = 0;
+    }
+    else if(timer_counter.LED_ms > 250)
+    {
+        LED_all_open();
+    }
 }
 
 void module_show_status_running(void)
 {
-  if(modbus_management.data_output!=0)
-  {
-    return;
-  }
-  
-  if(timer_counter.LED_ms>5200)
-  {
-    LED_all_close();
-    timer_counter.LED_ms=0;
-  }
-  else if(timer_counter.LED_ms>5000)
-  {    
-    LED_all_open();
-  }
+    if(modbus_management.data_output != 0)
+    {
+        return;
+    }
+
+    if(timer_counter.LED_ms > 5200)
+    {
+        LED_all_close();
+        timer_counter.LED_ms = 0;
+    }
+    else if(timer_counter.LED_ms > 5000)
+    {
+        LED_all_open();
+    }
 }
 
 void LED_all_open(void)
 {
-	PCout(13)=0;
-  PCout(14)=0;
-  PCout(15)=0;
-  PBout(4)=0;
-  PBout(7)=0;
-  PDout(2)=0;
-  PCout(10)=0;
-  PAout(15)=0;	
-  PBout(9)=0;
-  PBout(8)=0;
-  PBout(6)=0;
-  PBout(5)=0;
-  PBout(3)=0;
-  PCout(12)=0;
-  PCout(11)=0;
-  PFout(7)=0;
+    unsigned char i;
+    for(i = 0; i < 16; i++)
+    {
+        LED_ON(i);
+    }
 }
-
 
 void LED_all_close(void)
 {
-	PCout(13)=1;
-  PCout(14)=1;
-  PCout(15)=1;
-  PBout(4)=1;
-  PBout(7)=1;
-  PDout(2)=1;
-  PCout(10)=1;
-  PAout(15)=1;	
-  PBout(9)=1;
-  PBout(8)=1;
-  PBout(6)=1;
-  PBout(5)=1;
-  PBout(3)=1;
-  PCout(12)=1;
-  PCout(11)=1;
-  PFout(7)=1;
+    unsigned char i;
+    for(i = 0; i < 16; i++)
+    {
+        LED_OFF(i);
+    }
 }
-
-
